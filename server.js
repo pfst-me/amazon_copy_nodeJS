@@ -3,10 +3,15 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
+
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes')
 
 const PORT = process.env.PORT || 8001;
+
+const apiPath = '/api/v1/';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -31,7 +36,10 @@ app.use(
   })
 );
 
-app.use('/api/user', userRoutes);
+app.use(`${apiPath}user`, userRoutes);
+app.use(`${apiPath}products`, productRoutes);
+app.use(`${apiPath}dashboard`, dashboardRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
