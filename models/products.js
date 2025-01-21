@@ -11,6 +11,9 @@ const productSchema = new mongoose.Schema(
     discount: Number,//in %
     rating: String,
     availableCount: Number,
+    crediCardOffer: String,
+    deliveryInfo: String,
+    service: String,
     created_at: {
       type: Date,
       default: Date.now, // This will store the current date and time in ISO format
