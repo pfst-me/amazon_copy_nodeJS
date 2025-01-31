@@ -42,12 +42,21 @@ exports.createOrUpdateProducts = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    const { page = 1, limit = 10, search = '' } = req.query;
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      order = 'asc',
+      minPrice,
+      maxPrice,
+    } = req.query;
 
     const pageNumber = parseInt(page, 10);
     const pageSize = parseInt(limit, 10);
 
     const skip = (pageNumber - 1) * pageSize;
+
+    const sortOrder = order === 'asc' ? 1 : -1;
 
     const searchFilter = search
       ? {
@@ -58,7 +67,23 @@ exports.getProducts = async (req, res) => {
         }
       : {};
 
-    const data = await products.find(searchFilter).skip(skip).limit(pageSize);
+    const priceFilter = {};
+    
+    if (minPrice) {
+      priceFilter.price = { ...priceFilter.price, $gte: parseFloat(minPrice) };
+    }
+
+    if (maxPrice) {
+      priceFilter.price = { ...priceFilter.price, $lte: parseFloat(maxPrice) };
+    }
+
+    const filter = { ...searchFilter, ...priceFilter };
+
+    const data = await products
+      .find(filter)
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ price: sortOrder });
 
     const totalRecordCount = await products.countDocuments();
     res
