@@ -1,6 +1,6 @@
 const express = require('express');
-// const protect = require('../middleware/authMiddleware')
-const { createUser, loginUser, getNewAccessToken } = require('../controller/userController');
+const protect = require('../middleware/authMiddleware')
+const { createUser, loginUser, getNewAccessToken, getUsers } = require('../controller/userController');
 
 const router = express.Router();
 
@@ -12,5 +12,7 @@ router.post('/login', loginUser);
 
 //Route to get new access token
 router.post('/getNewAccessToken', getNewAccessToken)
+
+router.get('/getAllUser', protect, getUsers);
 
 module.exports = router;

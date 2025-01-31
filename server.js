@@ -39,6 +39,7 @@ app.use(
 app.use(`${apiPath}user`, userRoutes);
 app.use(`${apiPath}products`, productRoutes);
 app.use(`${apiPath}dashboard`, dashboardRoutes);
+app.use(`${apiPath}user`, userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

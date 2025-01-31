@@ -79,25 +79,25 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// // Get all users info
-// exports.getUsers = async (req, res) => {
-//   try {
-//     const users = await User.find().select('-password');
-//     const totalCount = await User.countDocuments();
+// Get all users info
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+    const totalCount = await User.countDocuments();
 
-//     res.status(200).json({
-//       success: true,
-//       users,
-//       totalRecords: totalCount,
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching users',
-//       error: err,
-//     });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      users,
+      totalRecords: totalCount,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching users',
+      error: err,
+    });
+  }
+};
 
 // new Accesstoken on refreshtoken
 exports.getNewAccessToken = async (req, res) => {
